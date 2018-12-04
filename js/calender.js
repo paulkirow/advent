@@ -1,5 +1,28 @@
 const TOTAL_DAYS = "24";
 
+function populateTree() {
+    let $root = $(".tree ul");
+    for (let i = 0; i < SHOWS_SELECTED.length; i++) {
+        let show = SHOWS_SELECTED[i];
+        let $showli = $("<li>").append($("<label>").text(show.show));
+        let $showul = $("<ul>").attr("name",show.show);
+        for (let j = 0; j < show.episodes.length; j++) {
+            let episodeText = getBottomText(show.episodes[j]) + " " + show.episodes[j].name;
+            let episodeName = show.episodes[j].name;
+            let episodeNumber = show.episodes[j].episode;
+            let episodeSeason = show.episodes[j].season;
+            $showul.append($("<li>").text(episodeText).attr({
+                "name": episodeName,
+                "number": episodeNumber,
+                "season": episodeSeason
+            }));
+        }
+        if (show.episodes.length > 0) {
+            $root.append($showli.append($showul));
+        }
+    }
+}
+
 function generate(seed) {
     let shows = deepCopy(SHOWS_SELECTED);
     let result = {

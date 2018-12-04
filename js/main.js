@@ -1,10 +1,29 @@
 var CALENDER;
 
 $(document).ready ( function(){
-    CALENDER = generate("Christmas 2018");
+
+    populateTree();
+
+    doChristmas();
+
+    $("#seed").keyup(function(event) {
+        if (event.keyCode === 13) {
+            doChristmas();
+        }
+    });
+
+    $("#seedSubmit").click(doChristmas);
+
+
+
+});
+
+function doChristmas() {
+    CALENDER = generate($("#seed").val());
 
     let $calender = $(".flex-container");
     let $dayOriginal = $(".day-template li");
+    $calender.empty();
     for (let i = 0; i < CALENDER.advent.length; i++) {
         let $day = $dayOriginal.clone();
         $day.find(".flex-item-closed").text(i + 1);
@@ -18,4 +37,4 @@ $(document).ready ( function(){
     $('.calender li').click(function() {
         $(this).toggleClass("flip")
     });
-});
+}
